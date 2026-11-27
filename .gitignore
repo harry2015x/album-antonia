@@ -6,3 +6,6 @@ heic/
 
 # Vercel
 .vercel
+
+# Muestras locales para aprobar (no se publican)
+muestra*.html

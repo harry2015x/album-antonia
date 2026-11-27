@@ -229,7 +229,7 @@ def page(p, n):
   <div class="vline"></div>
 </section>'''
     if t == "chapter":
-        return f'''<section class="slide dark s-chapter">
+        return f'''<section class="slide dark s-chapter c{p['cap']}">
   <div class="txt">
     <div class="roman gold-text reveal">{g("roman")}</div>
     <div class="eyebrow gold reveal d1">{g("eyebrow")}</div>
@@ -657,7 +657,7 @@ def construir():
 <title>{NOMBRE} · Mis primeros tres años</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<style>{CSS}</style></head>
+<style>{CSS}{TEMAS[TEMA]}</style></head>
 <body>
 {SVG}
 <div id="stage">
@@ -681,14 +681,102 @@ def construir():
 <button id="play">▶  Automático</button><button id="snd">♪  Música: no</button><button id="full">⛶</button></div>
 <script>{JS}</script>
 </body></html>"""
-    out = os.path.join(AQUI, "index.html")
+    out = os.path.join(AQUI, SALIDA)
     open(out, "w", encoding="utf-8").write(doc)
-    print(len(PAGINAS), "páginas ->", out)
+    print(len(PAGINAS), "páginas, tema", TEMA, "->", out)
+    if SALIDA != "index.html":
+        return  # una muestra: no se toca la versión de un solo archivo
     # versión de un solo archivo (fotos incrustadas) para llevar en una USB
     import re, base64
     solo = re.sub(r'src="(fotos/[^"]+\.jpg)"', lambda m: 'src="data:image/jpeg;base64,' +
                   base64.b64encode(open(os.path.join(AQUI, m.group(1)), "rb").read()).decode() + '"', doc)
     open(os.path.join(AQUI, f"{NOMBRE} - Album (un solo archivo).html"), "w", encoding="utf-8").write(solo)
+
+# ---------------------------------------------------------------------------
+# TEMAS de color.  "clasico" = dorado y gris.  "rosa" = rosado, lila y oro rosa,
+# con letra más grande para que se lea bien desde lejos.
+# Uso:  python generar.py                                    (tema rosa, actualiza index.html)
+#       python generar.py --tema clasico --salida muestra.html  (solo una muestra)
+# ---------------------------------------------------------------------------
+TEMAS = {"clasico": "", "rosa": r"""
+:root{--paper:#FBF6F5;--ink:#3D3340;--charcoal:#3A2B44;--gray:#8B7F8E;--line:#E7D9DE;
+--gold:#C08AA2;--gold-light:#DCC2DA;
+--gold-grad:linear-gradient(135deg,#EDC9C0 0%,#CC97A8 40%,#9E84C2 78%,#D9BCDD 100%)}
+.slide{background:linear-gradient(135deg,#FDF8F7 0%,#FAF1F3 55%,#F5F0F9 100%)}
+.dark{background:radial-gradient(ellipse at 30% 45%,#4D3A5C 0%,#33263E 72%)}
+.dark .title{color:#FDF4F7}.dark .body{color:#D6C8DC}.dark .foot{color:#B9A8C2}
+.title{color:#3D3340}
+.eyebrow{font-size:19px;font-weight:500;letter-spacing:.3em;color:#9884BA}
+.eyebrow.gold{color:#C9879F}
+.body{font-size:38px;line-height:1.38;font-weight:500;color:#5C5062}
+.caption{font-size:17px;font-weight:500;letter-spacing:.2em;color:#8E7A98;margin-top:20px}
+.caption::before{background:#D9A0B4}
+.foot{font-size:15px;letter-spacing:.3em;color:#9C8FA0}
+.foot .num{font-size:30px}
+.ic{stroke:#B387BB}
+.ph.framed::after{border-color:#DDC3DD}
+.s-chapter .ph.framed::after{border-color:rgba(236,196,220,.6)}
+.s-cover .title{font-size:220px}
+.s-cover .sub{font-size:50px;color:#8C6F92}
+.s-cover .chapters div{font-size:15px;font-weight:500;letter-spacing:.16em;color:#8E7A98}
+.s-chapter .title{font-size:150px}
+.s-chapter .body{max-width:700px}
+.s-feature .title{font-size:116px}
+.s-feature .quote{font-size:40px;color:#C9879F}
+.s-wide .txt{width:470px}.s-wide .ph{left:680px;width:1090px}
+.s-wide .title{font-size:96px}.s-wide .body{font-size:36px}
+.s-trip .title,.s-quad .title{font-size:92px}
+.s-trip .row,.s-quad .row{top:340px}
+.s-trip .cell .ph{height:540px}.s-quad .cell .ph{height:520px}
+.s-duo .txt{width:500px}.s-duo .title{font-size:96px}.s-duo .body{font-size:36px}
+.s-mosaic .side,.s-grid6 .side{width:440px}
+.s-mosaic .title,.s-grid6 .title{font-size:90px}
+.s-mosaic .body,.s-grid6 .body{font-size:34px}
+.grid{left:650px;width:1120px}
+.s-split2 .title{font-size:128px}
+.s-year .title{font-size:88px}
+.s-year .eyebrow{font-size:17px}
+.s-end .title{font-size:110px}
+.s-end .mono{border-color:#C08AA2}
+#bar{height:4px}
+#intro{background:radial-gradient(ellipse at center,#4D3A5C 0%,#2A1F33 78%)}
+#intro .mono{border-color:#D9A0B4}
+#intro .eyebrow{color:#E0A9BE;font-size:16px}
+#intro h1{color:#FDF4F7}
+#intro p{color:#D6C8DC;font-size:clamp(24px,2.8vw,36px)}
+#intro button{font-size:15px;border-color:#D9A0B4;background:linear-gradient(135deg,#F2CFC6,#D99CB0 50%,#A88AC9);color:#2E2236}
+#intro button.ghost{background:none;color:#F0C3D3}
+#intro .keys{font-size:14px;color:#B39CC0}
+.nav button{border-color:#8E7A98;color:#F0C3D3}
+.nav .count{color:#F0C3D3}
+
+/* Capítulos intercalados: I, III y V en morado; II y IV en rosado */
+.s-chapter.c2,.s-chapter.c4{background:radial-gradient(ellipse at 30% 45%,#D691A9 0%,#B26886 55%,#94506E 100%)}
+.s-chapter.c2 .roman,.s-chapter.c4 .roman{background:linear-gradient(135deg,#FFF3F6 0%,#F9D3DF 50%,#EDD3F2 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.s-chapter.c2 .eyebrow.gold,.s-chapter.c4 .eyebrow.gold{color:#FFE6EE}
+.s-chapter.c2 .title,.s-chapter.c4 .title{color:#FFFFFF}
+.s-chapter.c2 .body,.s-chapter.c4 .body{color:#FDEBF1}
+.s-chapter.c2 .rule,.s-chapter.c4 .rule{background:linear-gradient(90deg,#FFF3F6,#F3C6D6)}
+.s-chapter.c2 .ph.framed::after,.s-chapter.c4 .ph.framed::after{border-color:rgba(255,236,242,.75)}
+.s-chapter.c2 .foot,.s-chapter.c4 .foot{color:rgba(255,240,245,.85)}
+.s-chapter.c2 .foot .num,.s-chapter.c4 .foot .num{color:#FFFFFF}
+
+/* Pantalla de inicio en rosado */
+#intro{background:radial-gradient(ellipse at center,#D691A9 0%,#B26886 55%,#8E4C69 100%)}
+#intro .mono{border-color:#FFE6EE}
+#intro .mono span{background:linear-gradient(135deg,#FFF3F6,#F9D3DF 50%,#EDD3F2);-webkit-background-clip:text;background-clip:text;color:transparent}
+#intro .eyebrow{color:#FFE6EE}
+#intro h1{color:#FFFFFF}
+#intro p{color:#FDEBF1}
+#intro button{border-color:#FFF3F6;background:#FFF5F8;color:#8E4C69}
+#intro button.ghost{background:none;color:#FFFFFF;border-color:#FFE6EE}
+#intro .keys{color:#FBDDE8}
+"""}
+
+import sys
+_A = sys.argv[1:]
+TEMA = _A[_A.index("--tema") + 1] if "--tema" in _A else "rosa"   # aprobado el 2026-11-27
+SALIDA = _A[_A.index("--salida") + 1] if "--salida" in _A else "index.html"
 
 if __name__ == "__main__":
     construir()
