@@ -938,6 +938,15 @@ TEMAS = {"clasico": "", "rosa": r"""
 .s-chapter.c2 .foot,.s-chapter.c4 .foot{color:rgba(255,240,245,.85)}
 .s-chapter.c2 .foot .num,.s-chapter.c4 .foot .num{color:#FFFFFF}
 
+/* Títulos con color:
+   - páginas claras: rosa viejo semioscuro, y la parte en cursiva un poco más morada
+   - capítulos morados: rosado suave
+   - capítulos rosados: rosa muy claro (para que se lea sobre el fondo rosado) */
+.title{color:#8E4C78}
+.title em{color:#734E92}
+.dark .title,.dark .title em{color:#F2B3CA}
+.s-chapter.c2 .title,.s-chapter.c4 .title,.s-chapter.c2 .title em,.s-chapter.c4 .title em{color:#FFE6EE}
+.s-full .title,.s-full .title em{color:#FFFFFF}
 """}
 
 import sys
