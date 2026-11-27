@@ -1,0 +1,8 @@
+# Fotos HEIC convertidas (las originales no se suben)
+heic/
+
+# Versión de un solo archivo (44 MB): se regenera con generar.py
+*un solo archivo*.html
+
+# Vercel
+.vercel
