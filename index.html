@@ -2,7 +2,7 @@
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Antonia · Mis primeros tres años</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{--paper:#F7F4EF;--ink:#2B2A28;--charcoal:#262523;--gray:#8C8881;--line:#DCD5C9;--gold:#B08D57;--gold-light:#D6BC8A;
 --gold-grad:linear-gradient(135deg,#D9BF8C 0%,#B08D57 45%,#8E6D3E 70%,#CFB27C 100%);
@@ -141,20 +141,6 @@ body.ui .nav{opacity:.75}.nav:hover{opacity:1}
 .nav button{background:rgba(20,20,20,.55);border:1px solid #6d6457;color:#d6bc8a;min-width:40px;height:40px;border-radius:20px;cursor:pointer;font-size:15px;padding:0 14px}
 .nav button:hover{border-color:#d6bc8a}
 .nav .count{color:#d6bc8a;min-width:70px;text-align:center}
-/* pantalla de inicio (el navegador solo permite sonido después de un clic) */
-#intro{position:fixed;inset:0;z-index:20;background:radial-gradient(ellipse at center,#2c2a27 0%,#151514 75%);display:flex;align-items:center;justify-content:center;text-align:center;transition:opacity 1s,visibility 1s}
-body.started #intro{opacity:0;visibility:hidden}
-#intro .box{animation:rise 1.4s cubic-bezier(.2,.7,.2,1) both;padding:24px}
-#intro .mono{width:120px;height:120px;border:1px solid #b08d57;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 36px}
-#intro .mono span{font-family:var(--serif);font-style:italic;font-size:70px;font-weight:300}
-#intro .eyebrow{color:#b08d57}
-#intro h1{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(56px,9vw,120px);color:#f3eee6;margin:18px 0 6px}
-#intro p{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.4vw,30px);color:#a9a399}
-#intro .btns{display:flex;gap:18px;justify-content:center;margin-top:48px;flex-wrap:wrap}
-#intro button{font:500 13px var(--sans);letter-spacing:.28em;text-transform:uppercase;padding:18px 34px;border-radius:40px;cursor:pointer;border:1px solid #b08d57;background:linear-gradient(135deg,#D9BF8C,#B08D57 55%,#8E6D3E);color:#1c1a17}
-#intro button.ghost{background:none;color:#d6bc8a}
-#intro button:hover{filter:brightness(1.08)}
-#intro .keys{margin-top:34px;font-size:11px;letter-spacing:.22em;color:#6f6a62;text-transform:uppercase}
 
 :root{--paper:#FBF6F5;--ink:#3D3340;--charcoal:#3A2B44;--gray:#8B7F8E;--line:#E7D9DE;
 --gold:#C08AA2;--gold-light:#DCC2DA;
@@ -196,14 +182,6 @@ body.started #intro{opacity:0;visibility:hidden}
 .s-end .title{font-size:110px}
 .s-end .mono{border-color:#C08AA2}
 #bar{height:4px}
-#intro{background:radial-gradient(ellipse at center,#4D3A5C 0%,#2A1F33 78%)}
-#intro .mono{border-color:#D9A0B4}
-#intro .eyebrow{color:#E0A9BE;font-size:16px}
-#intro h1{color:#FDF4F7}
-#intro p{color:#D6C8DC;font-size:clamp(24px,2.8vw,36px)}
-#intro button{font-size:15px;border-color:#D9A0B4;background:linear-gradient(135deg,#F2CFC6,#D99CB0 50%,#A88AC9);color:#2E2236}
-#intro button.ghost{background:none;color:#F0C3D3}
-#intro .keys{font-size:14px;color:#B39CC0}
 .nav button{border-color:#8E7A98;color:#F0C3D3}
 .nav .count{color:#F0C3D3}
 
@@ -218,16 +196,147 @@ body.started #intro{opacity:0;visibility:hidden}
 .s-chapter.c2 .foot,.s-chapter.c4 .foot{color:rgba(255,240,245,.85)}
 .s-chapter.c2 .foot .num,.s-chapter.c4 .foot .num{color:#FFFFFF}
 
-/* Pantalla de inicio en rosado */
-#intro{background:radial-gradient(ellipse at center,#D691A9 0%,#B26886 55%,#8E4C69 100%)}
-#intro .mono{border-color:#FFE6EE}
-#intro .mono span{background:linear-gradient(135deg,#FFF3F6,#F9D3DF 50%,#EDD3F2);-webkit-background-clip:text;background-clip:text;color:transparent}
-#intro .eyebrow{color:#FFE6EE}
-#intro h1{color:#FFFFFF}
-#intro p{color:#FDEBF1}
-#intro button{border-color:#FFF3F6;background:#FFF5F8;color:#8E4C69}
-#intro button.ghost{background:none;color:#FFFFFF;border-color:#FFE6EE}
-#intro .keys{color:#FBDDE8}
+
+/* ===== Portada por capas ===== */
+#intro{--deep:#A85F7D;--champ:#D6B779;--ivory:#FFF5EF;
+  --marco:clamp(10px,calc(1.4vmin + 4px),28px);          /* separación del marco al borde */
+  --orn:min(17vw,30vh,340px);                             /* tamaño de cada ornamento de esquina */
+  position:fixed;inset:0;z-index:20;overflow:hidden auto;transition:opacity 1.1s ease,visibility 1.1s}
+body.started #intro{opacity:0;visibility:hidden}
+
+/* capas fijas detrás del contenido */
+.capa{position:fixed;inset:0;pointer-events:none}
+.capa-degradado{z-index:0;background:
+  linear-gradient(160deg,rgba(168,95,125,0) 35%,rgba(118,72,112,.42) 100%),
+  radial-gradient(ellipse at 50% 42%,#D49BB2 0%,#C7839F 35%,#B46F8C 70%,#A85F7D 100%)}
+.capa-fondo{z-index:1;background:url("images/portada/fondo-desktop.webp") center/cover no-repeat}
+.capa-ornamentos{z-index:2}
+.capa-marco{z-index:3;inset:var(--marco);border:1px solid rgba(214,183,121,.6)}
+.capa-marco::after{content:"";position:absolute;inset:6px;border:1px solid rgba(214,183,121,.25)}
+
+/* ornamentos de esquina: tamaño fijo cuadrado (nunca se deforman) anclado al marco */
+.orn{position:absolute;width:var(--orn);height:var(--orn);
+  --pos:max(2px,calc(var(--marco) - var(--orn) * .09));
+  filter:drop-shadow(0 1px 1px rgba(90,40,60,.15));animation:i-fade 2.2s ease .3s both}
+.orn.sup-izq{left:var(--pos);top:var(--pos)}
+.orn.sup-der{right:var(--pos);top:var(--pos)}
+.orn.inf-izq{left:var(--pos);bottom:var(--pos);animation-delay:.6s}
+.orn.inf-der{right:var(--pos);bottom:var(--pos);animation-delay:.6s}
+.brillo{position:absolute;height:auto;opacity:0;animation:i-twinkle var(--dur) ease-in-out var(--del) infinite}
+.remate{position:absolute;left:50%;bottom:calc(var(--marco) + 10px);transform:translateX(-50%);
+  width:clamp(140px,15vw,250px);height:auto;animation:i-fade 2s ease 1.4s both}
+
+/* capa de contenido */
+.capa-contenido{position:relative;z-index:4;min-height:100%;display:flex;text-align:center}
+#intro .box{margin:auto;width:100%;max-width:1100px;
+  padding:max(calc(var(--marco) + 40px),9vh) 24px max(calc(var(--marco) + 64px),11vh)}
+
+/* monograma */
+.i-mono{--m:clamp(84px,min(11vw,16vh),156px);position:relative;width:var(--m);height:var(--m);
+  margin:0 auto calc(var(--m) * .3);display:flex;align-items:center;justify-content:center;
+  animation:i-mono 1.6s cubic-bezier(.2,.7,.2,1) both}
+.i-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.i-ring .r1{fill:rgba(168,95,125,.25);stroke:url(#g-anillo);stroke-width:2.6;stroke-dasharray:453;stroke-dashoffset:453;
+  animation:i-draw 2.2s ease .3s forwards;filter:drop-shadow(0 0 6px rgba(246,224,180,.55))}
+.i-ring .r2{fill:none;stroke:rgba(214,183,121,.55);stroke-width:.8}
+.i-mono span{position:relative;font-family:var(--serif);font-style:italic;font-weight:500;font-size:calc(var(--m) * .56);
+  line-height:1;color:var(--ivory);text-shadow:0 2px 10px rgba(110,40,70,.35);margin-top:-4%}
+.i-ring-spark{position:absolute;right:4%;top:0;width:24%;height:auto;animation:i-twinkle 6s ease-in-out 1.8s infinite}
+.i-laurel{position:absolute;bottom:-10%;width:66%;height:auto;animation:i-fade 1.8s ease .9s both}
+.i-laurel.izq{left:-38%;transform:rotate(-14deg)}
+.i-laurel.der{right:-38%;transform:rotate(14deg)}
+
+/* textos */
+.i-eyebrow{display:flex;align-items:center;justify-content:center;gap:clamp(12px,2vw,26px);
+  font:500 clamp(13px,1.45vw,22px) var(--sans);letter-spacing:.42em;text-transform:uppercase;color:#F7E6D6;
+  animation:i-rise 1.4s ease .45s both}
+.i-eyebrow span{padding-left:.42em}
+.i-eyebrow i,.i-sep i{display:block;height:1px;width:clamp(36px,11vw,170px);background:linear-gradient(90deg,rgba(227,200,143,0),#E3C88F)}
+.i-eyebrow i:last-child,.i-sep i:last-child{background:linear-gradient(90deg,#E3C88F,rgba(227,200,143,0))}
+#intro h1{font-family:var(--serif);font-style:italic;font-weight:500;line-height:1.02;letter-spacing:.01em;
+  font-size:clamp(56px,min(12vw,19vh),184px);margin:clamp(4px,1.4vh,16px) 0 clamp(2px,1vh,10px);color:var(--ivory);
+  text-shadow:0 6px 24px rgba(110,40,70,.35),0 0 1px rgba(214,183,121,.6);animation:i-name 1.8s cubic-bezier(.2,.7,.2,1) .6s both}
+.i-sep{display:flex;align-items:center;justify-content:center;gap:14px;animation:i-rise 1.4s ease .95s both}
+.i-sep i{width:clamp(44px,14vw,250px)}
+.i-sep img{width:clamp(24px,2.6vw,40px);height:auto}
+#intro p{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(22px,min(3.4vw,5.2vh),52px);
+  color:var(--ivory);margin-top:clamp(4px,1.2vh,14px);text-shadow:0 2px 12px rgba(110,40,70,.3);animation:i-rise 1.4s ease 1.05s both}
+
+/* botones (mismos ids y eventos; solo cambia el aspecto) */
+#intro .btns{display:flex;gap:clamp(14px,2vw,28px);justify-content:center;flex-wrap:wrap;margin-top:clamp(22px,5vh,58px);
+  animation:i-rise 1.4s ease 1.25s both}
+.i-btn{display:inline-flex;align-items:center;justify-content:center;gap:16px;cursor:pointer;border-radius:999px;
+  font:500 clamp(12px,1.25vw,18px) var(--sans);letter-spacing:.24em;text-transform:uppercase;
+  padding:clamp(14px,2.2vh,22px) clamp(26px,3.4vw,50px);border:1px solid var(--champ);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease,filter .35s ease,background-color .35s ease}
+.i-btn svg{width:.95em;height:1.1em;fill:currentColor;flex:none}
+.i-btn.primary{background:var(--ivory);color:var(--deep);box-shadow:0 8px 22px rgba(96,36,62,.28),inset 0 0 0 3px rgba(255,255,255,.55)}
+.i-btn.ghost{background:transparent;color:var(--ivory)}
+.i-btn:hover,.i-btn:focus-visible{transform:translateY(-3px);filter:brightness(1.05)}
+.i-btn.primary:hover,.i-btn.primary:focus-visible{box-shadow:0 14px 30px rgba(96,36,62,.34),inset 0 0 0 3px rgba(255,255,255,.7)}
+.i-btn.ghost:hover,.i-btn.ghost:focus-visible{background:rgba(255,245,239,.1);box-shadow:0 12px 26px rgba(96,36,62,.22)}
+.i-btn:focus-visible{outline:2px solid var(--ivory);outline-offset:4px}
+.i-btn:active{transform:translateY(-1px)}
+#intro .keys{margin-top:clamp(16px,3.4vh,40px);font:500 clamp(10px,1.05vw,15px) var(--sans);letter-spacing:.24em;
+  text-transform:uppercase;color:rgba(255,245,239,.85);animation:i-rise 1.4s ease 1.45s both}
+
+/* ---------- composición por dispositivo ---------- */
+/* Portátil y monitores 4:3 (horizontal, ≤1366): ornamentos proporcionalmente menores */
+@media (orientation:landscape) and (max-width:1366px){
+  #intro{--orn:min(16vw,28vh,300px)}
+}
+/* Tablet y teléfono en vertical: fondo vertical, ornamentos en las cuatro esquinas
+   y contenido con margen superior/inferior para no cruzarse con las ramas */
+@media (orientation:portrait){
+  #intro{--orn:min(30vw,20vh,250px)}
+  .capa-fondo{background-image:url("images/portada/fondo-mobile.webp")}
+  #intro .box{padding:calc(var(--marco) + var(--orn) * .62) 20px calc(var(--marco) + var(--orn) * .62)}
+  .remate{width:min(30vw,220px)}
+}
+/* Tablet vertical: contenido más grande para aprovechar el alto */
+@media (orientation:portrait) and (min-width:601px){
+  .i-mono{--m:clamp(110px,15vw,170px)}
+  .i-eyebrow{font-size:clamp(15px,2.2vw,22px)}
+  #intro h1{font-size:clamp(96px,15vw,170px)}
+  #intro p{font-size:clamp(28px,4.4vw,46px)}
+  .i-btn{font-size:clamp(13px,1.8vw,17px)}
+  #intro .keys{font-size:clamp(11px,1.5vw,14px)}
+}
+/* Teléfono vertical */
+@media (orientation:portrait) and (max-width:600px){
+  .i-eyebrow{letter-spacing:.3em;font-size:12px}
+  .i-eyebrow i{width:26px}
+  #intro h1{font-size:clamp(54px,17vw,84px)}
+  #intro p{font-size:clamp(20px,6vw,26px)}
+  #intro .btns{flex-direction:column;align-items:center;gap:14px}
+  .i-btn{width:min(100%,300px);letter-spacing:.18em;font-size:13px;padding:16px 20px}
+  #intro .keys{display:none}
+}
+/* Teléfono horizontal y pantallas bajas: composición horizontal compacta */
+@media (orientation:landscape) and (max-height:500px){
+  #intro{--orn:min(15vw,30vh,140px)}
+  #intro .box{padding:calc(var(--marco) + 18px) calc(var(--orn) * .55) calc(var(--marco) + 26px)}
+  .i-mono{--m:62px;margin-bottom:20px}
+  .i-eyebrow{font-size:11px}
+  #intro h1{font-size:52px;margin:2px 0}
+  #intro p{font-size:19px;margin-top:2px}
+  #intro .btns{margin-top:14px;flex-wrap:nowrap}
+  .i-btn{padding:11px 20px;font-size:11px;letter-spacing:.18em}
+  #intro .keys,.remate{display:none}
+}
+
+/* animaciones suaves */
+@keyframes i-fade{from{opacity:0}to{opacity:1}}
+@keyframes i-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes i-mono{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+@keyframes i-name{from{opacity:0;transform:translateY(18px);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes i-draw{to{stroke-dashoffset:0}}
+@keyframes i-twinkle{0%,100%{opacity:0;transform:translateY(0) scale(.6)}45%{opacity:.85;transform:translateY(-6px) scale(1)}60%{opacity:.6}}
+@media (prefers-reduced-motion:reduce){
+  #intro,#intro *{animation:none!important;transition:none!important}
+  .i-ring .r1{stroke-dashoffset:0}
+  .brillo{opacity:.5}
+}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute"><defs>
@@ -888,16 +997,36 @@ body.started #intro{opacity:0;visibility:hidden}
 <div id="bar"></div>
 </div>
 <div id="intro">
-  <div class="box">
-    <div class="mono"><span class="gold-text">A</span></div>
-    <div class="eyebrow">Álbum familiar</div>
-    <h1>Antonia</h1>
-    <p>Mis primeros tres años</p>
-    <div class="btns">
-      <button id="start-auto">▶&nbsp;&nbsp;Ver con música</button>
-      <button id="start-manual" class="ghost">Pasar las páginas yo</button>
+  <div class="capa capa-degradado" aria-hidden="true"></div>
+  <div class="capa capa-fondo" aria-hidden="true"></div>
+  <div class="capa capa-ornamentos" aria-hidden="true"><img class="orn sup-izq" src="images/portada/ornamento-superior-izquierdo.svg" alt=""><img class="orn sup-der" src="images/portada/ornamento-superior-derecho.svg" alt=""><img class="orn inf-izq" src="images/portada/ornamento-inferior-izquierdo.svg" alt=""><img class="orn inf-der" src="images/portada/ornamento-inferior-derecho.svg" alt=""><img class="brillo" src="images/portada/destello.svg" alt="" style="left:19%;top:31%;width:16px;--dur:8s;--del:0s"><img class="brillo" src="images/portada/destello.svg" alt="" style="left:76%;top:27%;width:14px;--dur:9.5s;--del:1.4s"><img class="brillo" src="images/portada/destello.svg" alt="" style="left:27%;top:64%;width:12px;--dur:10s;--del:3s"><img class="brillo" src="images/portada/destello.svg" alt="" style="left:71%;top:70%;width:15px;--dur:8.5s;--del:2.2s"><img class="brillo" src="images/portada/destello.svg" alt="" style="left:37%;top:18%;width:10px;--dur:11s;--del:4s"><img class="brillo" src="images/portada/destello.svg" alt="" style="left:63%;top:84%;width:10px;--dur:9s;--del:5s">
+    <img class="remate" src="images/portada/remate-inferior.svg" alt="">
+  </div>
+  <div class="capa capa-marco" aria-hidden="true"></div>
+  <div class="capa-contenido">
+    <div class="box">
+      <div class="i-mono">
+        <svg class="i-ring" viewBox="0 0 160 160" aria-hidden="true">
+          <defs><linearGradient id="g-anillo" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#F7E9C6"/><stop offset=".35" stop-color="#D6B779"/>
+            <stop offset=".7" stop-color="#B8924E"/><stop offset="1" stop-color="#EBD7A6"/></linearGradient></defs>
+          <circle class="r1" cx="80" cy="80" r="72"/><circle class="r2" cx="80" cy="80" r="66"/>
+        </svg>
+        <span>A</span>
+        <img class="i-ring-spark" src="images/portada/destello.svg" alt="">
+        <img class="i-laurel izq" src="images/portada/laurel-izquierdo.svg" alt="">
+        <img class="i-laurel der" src="images/portada/laurel-derecho.svg" alt="">
+      </div>
+      <div class="i-eyebrow"><i></i><span>Álbum familiar</span><i></i></div>
+      <h1>Antonia</h1>
+      <div class="i-sep" aria-hidden="true"><i></i><img src="images/portada/corazon.svg" alt=""><i></i></div>
+      <p>Mis primeros tres años</p>
+      <div class="btns">
+        <button id="start-auto" class="i-btn primary"><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1l10 6-10 6z"/></svg>Ver con música</button>
+        <button id="start-manual" class="i-btn ghost">Pasar las páginas yo</button>
+      </div>
+      <div class="keys">← → páginas · A automático · M música · F pantalla completa</div>
     </div>
-    <div class="keys">← → páginas · A automático · M música · F pantalla completa</div>
   </div>
 </div>
 <div class="nav"><button id="prev">‹</button><span class="count" id="count"></span><button id="next">›</button>
